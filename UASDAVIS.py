@@ -1,11 +1,15 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 from sqlalchemy import create_engine
 import pymysql
 import random
-import numpy as np 
+import squarify
+from io import StringIO
+import os
+from gtts import gTTS
 
 # Fungsi untuk membuat koneksi ke database AdventureWorks
 def create_connection_aw():
