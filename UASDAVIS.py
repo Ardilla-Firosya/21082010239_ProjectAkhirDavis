@@ -5,6 +5,7 @@ import seaborn as sns
 from sqlalchemy import create_engine
 import pymysql
 import random
+import numpy as np 
 
 # Fungsi untuk membuat koneksi ke database AdventureWorks
 def create_connection_aw():
