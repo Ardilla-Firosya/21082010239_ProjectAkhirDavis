@@ -54,7 +54,7 @@ def load_data_imdb(file_path):
 # Main function to set up the Streamlit app
 def main():
     # Judul utama aplikasi
-    st.markdown("<h1 style='text-align: center;'>Data Visualization</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Dashboard</h1>", unsafe_allow_html=True)
     
     # Sidebar untuk memilih dataset
     dataset_choice = st.sidebar.radio("Pilih Dataset", ("Adventure Works", "IMDb top Movies"))
