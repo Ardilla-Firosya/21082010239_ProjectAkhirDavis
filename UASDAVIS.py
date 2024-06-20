@@ -67,7 +67,76 @@ def main():
         st.write("Jumlah Penjualan Berdasarkan SubKategori Produk")
         st.write("Comparison: Bar Chart")
         
-        # ... Lanjutkan visualisasi AdventureWorks seperti sebelumnya
+        # SQLAlchemy connection and query for bar chart
+    try:
+            # Establish the database connection using SQLAlchemy
+            engine = create_engine("mysql+pymysql://davis2024irwan:wh451n9m%40ch1n3@kubela.id:3306/aw")
+    
+            # SQL query to fetch the required data for bar chart
+            bar_chart_query = """
+            SELECT 
+                dpsc.EnglishProductSubCategoryName AS ProductSubCategory, 
+                SUM(fis.SalesAmount) AS SalesAmount
+            FROM 
+                factinternetsales fis
+            JOIN 
+                dimproduct dp ON fis.ProductKey = dp.ProductKey
+            JOIN 
+                dimproductsubcategory dpsc ON dp.ProductSubCategoryKey = dpsc.ProductSubCategoryKey
+            GROUP BY 
+                dpsc.EnglishProductSubCategoryName
+            ORDER BY
+                SalesAmount DESC
+            """
+            
+            # Fetch the data into a pandas DataFrame
+            df_viz = pd.read_sql(bar_chart_query, engine)
+    
+            # Determine the top 7 categories and group the rest into 'Others'
+            top_n = 7
+            top_categories = df_viz.nlargest(top_n, 'SalesAmount')
+            others = pd.DataFrame({
+            'ProductSubCategory': ['Others'],
+            'SalesAmount': [df_viz['SalesAmount'][~df_viz['ProductSubCategory'].isin(top_categories['ProductSubCategory'])].sum()]
+            })
+        
+            # Combine the top categories with the 'Others' category
+            df_viz_combined = pd.concat([top_categories, others], ignore_index=True)
+            
+            # Plotting the bar chart using seaborn
+            plt.figure(figsize=(14, 7))
+            sns.barplot(data=df_viz_combined, x='SalesAmount', y='ProductSubCategory', palette='viridis')
+            plt.title('Sales Amount by Product Sub Category')
+            plt.xlabel('Sales Amount')
+            plt.ylabel('Product Sub Category')
+            plt.tight_layout()
+    
+            
+            # Display the plot in Streamlit
+            st.pyplot(plt)
+            
+        except Exception as e:
+            st.error(f"Error: {e}")
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <b>Deskripsi Data Visualisasi:</b> <br>
+        Visualisasi data tersebut menggunakan Grafik Bar Chart dengan menampilkan jumlah penjualan berdasarkan sub category product dari data AdventureWorks. Grafik tersebut terdiri antara sumbu x sebagai 'Sales Amount' (jumlah penjualan) dan sumbu y sebagai 'Product Sub Category'. Terdapat 8 subcategory dengan penjualan tertinggi dan kategori others (kategori produk lain) dimana jumlah penjualan digabungkan menjadi satu kategori yang memiliki jumlah penjualan paling sedikit.
+        </div>
+        """, unsafe_allow_html=True)
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <ul>
+        <li>Road Bikes memiliki jumlah penjualan tertinggi yaitu sekitar 14 juta</li>
+        <li>Montain Bikes memiliki jumlah penjualan tertinggi ke dua sekitar 9 juta</li>
+        <li>Touring Bikes memiliki jumlah penjualan sekitar 5 juta</li>
+        <li>Tires dan Tubes memiliki jumlah penjualan sekitar 1 juta</li>
+        <li>Dan terakhir Kategori others memiliki jumlah penjualan lebih dari 100 ribu</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
         
     elif dataset_choice == "IMDB Movies":
         st.markdown("<h2 style='text-align: center;'>Dataset IMDB Movies🎬</h2>", unsafe_allow_html=True)
