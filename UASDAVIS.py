@@ -59,7 +59,7 @@ def main():
     # Sidebar untuk memilih dataset
     dataset_choice = st.sidebar.radio("Pilih Dataset", ("AdventureWorks", "IMDB Movies"))
 
-    if dataset_choice == "AdventureWorks":
+    if dataset_choice == "Adventure Works":
         st.markdown("<h2 style='text-align: center;'>Dataset AdventureWorks🗒</h2>", unsafe_allow_html=True)
         
         # Visualisasi untuk AdventureWorks
