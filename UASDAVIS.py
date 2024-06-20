@@ -359,6 +359,106 @@ def main():
     
         st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
 
+        # Second visualization: Donut Chart (Composition)
+        st.header("Distribution of Movies by Rating")
+        st.write("Distribusi Film Berdasarkan Rating (Persen)")
+        st.write("Composition: Donut Chart")
+    
+        data['Rating'] = data['Rating'].astype(str)
+        rating_counts = data['Rating'].value_counts()
+    
+        # Plot donut chart
+        plt.figure(figsize=(8, 8))
+        colors = plt.cm.viridis(np.linspace(0, 1, len(rating_counts)))  # Generate colors
+        wedges, texts, autotexts = plt.pie(rating_counts, labels=rating_counts.index, autopct='%1.1f%%', startangle=140, wedgeprops=dict(width=0.3), colors=colors, textprops=dict(color="black"))
+    
+        # Add a white circle at the center to make it a donut chart
+        centre_circle = plt.Circle((0, 0), 0.70, fc='white')
+        fig = plt.gcf()
+        fig.gca().add_artist(centre_circle)
+    
+        # Improve label visibility
+        for text in texts + autotexts:
+            text.set_fontsize(10)
+    
+        # Set title and legend
+        plt.title('Distribution of Movies by Rating')
+        plt.legend(wedges, rating_counts.index, title='Rating', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        st.pyplot(plt)
+        plt.clf()
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <b>Deksripsi Data Visualisasi:</b><br>
+        Data visualisasi tersebut menggunakan Donut Chart untuk menampilkan distribusi film berdasarkan rating. Gambar tersebut menunjukkan distribusi rating film, sedangkan label dan persentase yang diberikan menunjukkan proporsi masing-masing rating. Terdapat 6 kategori rating di mana kategori rating R mendapatkan nilai proporsi tertinggi sebesar 52%, sedangkan nilai terendah sebesar 2% terdapat pada kategori rating Approved.
+        </div>
+        """, unsafe_allow_html=True)
+    
+        
+        st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+    
+        # Third visualization: Histogram (Distribution)
+        st.header("Distribusi Gross US ")
+        st.write("Distribusi Pendapatan Kotor pada Data IMDB")
+        st.write("Distribution : Histogram Column")
+    
+        data['Gross_Us'] = pd.to_numeric(data['Gross_Us'], errors='coerce').fillna(0)
+    
+        # Plot histograms
+        plt.figure(figsize=(14, 6))
+    
+        # Histogram untuk Gross US
+        plt.subplot(1, 2, 1)
+        plt.hist(data['Gross_Us'], bins=50, color='blue', edgecolor='black', alpha=0.7)
+        plt.title('Distribusi Gross US')
+        plt.xlabel('Gross US (dalam dolar)')
+        plt.ylabel('Frekuensi')
+        plt.grid(True)
+    
+        plt.tight_layout()
+        st.pyplot(plt)
+        plt.clf()
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <b>Deksripsi Data Visualisasi:</b><br>
+        Data Visualisasi tersebut menggunakan Histogram Column untuk menunjukkan jumlah film yang memiliki pendapatan kotor (dalam dolar) dalam rentang tertentu. Sumbu x menunjukkan jumlah pendapatan kotor berkisar dari 0 hingga lebih dari 5e8 (500 juta dolar) dan sumbu y menunjukkan frekuensi atau jumlah film yang jatuh dalam rentang pendapatan kotor tertentu. Terdapat beberapa film yang memiliki pendapatan kotor antara 1e8 (100 juta dolar) hingga 5e8 (500 juta dolar), tetapi frekuensi film tersebut rendah hanya sekitar 1 hingga 2 film per rentang.
+        </div>
+        """, unsafe_allow_html=True)
+    
+        st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+    
+        # Fourth visualization: Scatter Plot (Relationship)
+        st.header("Relationship between Year and Movie Rating")
+        st.write("Hubungan antara Tahun dan Rate Film")
+        st.write("Relationship : Scatter Plot")
+    
+        data['Year'] = pd.to_numeric(data['Year'], errors='coerce')
+        data['Rate'] = pd.to_numeric(data['Rate'], errors='coerce').fillna(0)
+    
+        # Remove rows with missing years or rates
+        data = data.dropna(subset=['Year', 'Rate'])
+    
+        # Plot scatter plot
+        plt.figure(figsize=(12, 6))
+        plt.scatter(data['Year'], data['Rate'], alpha=0.5, c='orange')
+        plt.title('Year vs Rate')
+        plt.xlabel('Year')
+        plt.ylabel('Rate')
+        plt.grid(True)
+        plt.tight_layout()
+        st.pyplot(plt)
+        plt.clf()
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <b>Deskripsi Data Visualisasi:</b><br>
+        Data Visualisasi tersebut menggunakan Scatter Plot untuk menampilkan hubungan antara Year (tahun) dan Rate. Terdapat dua komponen, yaitu sumbu x menunjukkan tahun (Year) dan sumbu y menunjukkan rating film (Rate). Sebagian besar titik tersebar secara acak di seluruh rentang tahun. Salah satu hasil visualisasi tersebut terdapat pada koordinat titik (1980, 8.7), yang berarti pada tahun 1980, film yang terdapat pada data IMDb memiliki rating sebesar 8.7. Selain itu, ditemukan bahwa rentang tahun 1980-2000 memiliki rating film tertinggi sebesar 9.3.
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+
 # Entry point untuk aplikasi Streamlit
 if __name__ == "__main__":
     main()
