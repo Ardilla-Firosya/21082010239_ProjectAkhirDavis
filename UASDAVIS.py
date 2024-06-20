@@ -282,24 +282,24 @@ def main():
     Data Visualisasi tersebut menggunakan Histogram Column Chart untuk menampilkan distribusi jumlah penjualan tiap bulan. Komponen grafik ini terdiri dari label sumbu x yaitu Month (Bulan) dan label sumbu y yaitu Total Sales Amount (Jumlah penjualan). Berdasarkan hasil tersebut, diketahui bahwa jumlah penjualan perbulan tertinggi terletak pada bulan ke-10 (Oktober) sekitar 1,640,296.00 dan jumlah penjualan terendah terletak pada bulan ke-11 (November) sekitar 45,642.00.
     </div>
     """, unsafe_allow_html=True)
-        
-    elif dataset_choice == "IMDB Movies":
-        st.markdown("<h2 style='text-align: center;'>Dataset IMDB Movies🎬</h2>", unsafe_allow_html=True)
-        
-        # Load data IMDB Movies
-        file_path = 'imdb_combined.csv'  # Sesuaikan dengan path file CSV IMDB Movies Anda
-        data = load_data_imdb(file_path)
-        if data is not None:
-            st.write(data)
+    
+        elif dataset_choice == "IMDB Movies":
+            st.markdown("<h2 style='text-align: center;'>Dataset IMDB Movies🎬</h2>", unsafe_allow_html=True)
             
-            # Visualisasi untuk IMDB Movies
-            st.header("Top 10 Highest Rated Movies")
-            st.write("10 Film berdasarkan Rate Tertinggi")
-            st.write("Comparison: Line Chart")
-            
-            # ... Lanjutkan visualisasi IMDB Movies seperti sebelumnya
-            
-    st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+            # Load data IMDB Movies
+            file_path = 'imdb_combined.csv'  # Sesuaikan dengan path file CSV IMDB Movies Anda
+            data = load_data_imdb(file_path)
+            if data is not None:
+                st.write(data)
+                
+                # Visualisasi untuk IMDB Movies
+                st.header("Top 10 Highest Rated Movies")
+                st.write("10 Film berdasarkan Rate Tertinggi")
+                st.write("Comparison: Line Chart")
+                
+                # ... Lanjutkan visualisasi IMDB Movies seperti sebelumnya
+                
+        st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
 
 # Entry point untuk aplikasi Streamlit
 if __name__ == "__main__":
