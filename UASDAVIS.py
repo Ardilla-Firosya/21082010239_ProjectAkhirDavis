@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sqlalchemy import create_engine
 import pymysql
+import random
 
 # Fungsi untuk membuat koneksi ke database AdventureWorks
 def create_connection_aw():
