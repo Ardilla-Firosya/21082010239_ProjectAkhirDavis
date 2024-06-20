@@ -57,14 +57,12 @@ def load_data_imdb(file_path):
 
 # Main function to set up the Streamlit app
 def main():
-    # Judul utama aplikasi
-    st.markdown("<h1 style='text-align: center;'>Dashboard</h1>", unsafe_allow_html=True)
     
     # Sidebar untuk memilih dataset
     dataset_choice = st.sidebar.radio("Pilih Dataset", ("Adventure Works", "IMDb top Movies"))
 
     if dataset_choice == "Adventure Works":
-        st.markdown("<h2 style='text-align: center;'>Dataset AdventureWorks🗒</h2>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>Dashboard Adventure Works📝</h1>", unsafe_allow_html=True)
         
         # Visualisasi untuk AdventureWorks
         st.header("Sales Amount by Product Sub Category")
@@ -286,7 +284,7 @@ def main():
         st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
         
     elif dataset_choice == "IMDb top Movies":
-        st.markdown("<h2 style='text-align: center;'>Dataset IMDB Movies🎬</h2>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center;'>Dasboard IMDb top Movies🎬</h1>", unsafe_allow_html=True)
         
         # Load data IMDB Movies
         file_path = 'imdb_combined.csv'  # Sesuaikan dengan path file CSV IMDB Movies Anda
