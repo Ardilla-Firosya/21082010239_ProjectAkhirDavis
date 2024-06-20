@@ -1,0 +1,11 @@
+pandas
+numpy
+matplotlib
+seaborn
+streamlit
+Babel
+SQLAlchemy
+gTTS
+squarify
+pymysql
+mysql-connector-python-rf
