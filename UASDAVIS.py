@@ -115,8 +115,8 @@ def main():
             # Display the plot in Streamlit
             st.pyplot(plt)
             
-        except Exception as e:
-            st.error(f"Error: {e}")
+    except Exception as e:
+        st.error(f"Error: {e}")
     
         st.markdown("""
         <div style='text-align: justify;'>
