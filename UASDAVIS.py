@@ -133,6 +133,151 @@ def main():
 
         except Exception as e:
             st.error(f"Error: {e}")
+
+    st.header("Total Sales Amount by Country")
+    st.write("Jumlah Penjualan Berdasarkan Negara")
+    st.write("Composition: Donut Chart")
+    
+    # SQLAlchemy connection and query for donut chart
+    try:
+        # SQL query to fetch the required data for donut chart
+        donut_chart_query = """
+        SELECT 
+            dg.EnglishCountryRegionName AS Country,
+            SUM(fis.SalesAmount) AS TotalSalesAmount
+        FROM 
+            factinternetsales fis
+        JOIN 
+            dimgeography dg ON fis.SalesTerritoryKey = dg.SalesTerritoryKey
+        GROUP BY 
+            dg.EnglishCountryRegionName
+        """
+
+        
+        # Fetch the data into a pandas DataFrame
+        df_country = pd.read_sql(donut_chart_query, engine)
+        
+        # Plotting the donut chart using matplotlib
+        plt.figure(figsize=(10, 8))
+        country_sales = df_country['TotalSalesAmount']
+        countries = df_country['Country']
+        plt.pie(country_sales, labels=countries, autopct='%1.1f%%', startangle=90)
+        # Draw a circle at the center of pie to make it a donut
+        centre_circle = plt.Circle((0, 0), 0.70, fc='white')
+        fig = plt.gcf()
+        fig.gca().add_artist(centre_circle)
+        plt.title('Total Sales Amount by Country')
+        plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        
+        # Display the plot in Streamlit
+        st.pyplot(plt)
+
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    st.markdown("""
+    <div style='text-align: justify;'>
+    <b>Deskripsi Data Visualisasi:</b> <br>
+    Visualisasi data diatas menggunakan grafik Donut Chart untuk menampilkan Jumlah Penjualan Berdasarkan Negara. Berikut penjelasan visualisasi tersebut: 
+    <ul>
+    <li>United State merupakan negara dengan jumlah penjulan tertinggi sekitar 50.7%. Hal ini menunjukkan bahwa lebih dari setengah total penjualan berasal dari US</li>
+    <li>Australia merupakan negara kedua dengan jumlah penjualan tertinggi sekitar 17.8%</li>
+    <li>Germany merupakan negara dengan jumlah penjualan sebesar 9.3%</li>
+    <li>United Kingdom merupakan negara dengan jumlah penjualan 8.8%</li>
+    <li>Canada merupakan negara dengan jumlah penjualan sebesar 7.1%</li>
+    <li>French merupakan negara dengan jumlah penjualan terendah sebesar 6.2%</li>
+    </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+
+    
+    st.header("Relationship between Sales Amount and Order Quantity")
+    st.write("Relationship: Scatter Plot")
+    
+    # SQLAlchemy connection and query for scatter plot
+    try:
+        # SQL query to fetch the required data for scatter plot
+        scatter_plot_query = """
+        SELECT 
+            SUM(SalesAmount) AS TotalSalesAmount,
+            SUM(OrderQuantity) AS TotalOrderQuantity
+        FROM 
+            factinternetsales
+        GROUP BY 
+            ProductKey
+        """
+        
+        # Fetch the data into a pandas DataFrame
+        df_scatter = pd.read_sql(scatter_plot_query, engine)
+        
+        # Plotting the scatter plot using seaborn
+        plt.figure(figsize=(12, 8))
+        sns.scatterplot(data=df_scatter, x='TotalOrderQuantity', y='TotalSalesAmount')
+        plt.title('Relationship between Sales Amount and Order Quantity')
+        plt.xlabel('Total Order Quantity')
+        plt.ylabel('Total Sales Amount')
+        plt.tight_layout()
+        
+        # Display the plot in Streamlit
+        st.pyplot(plt)
+        
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    st.markdown("""
+    <div style='text-align: justify;'>
+    <b>Deskripsi Data Visualisasi:</b> <br>
+    Visualisasi data diatas menggunakan scatter plot untuk menampilkan hubungan antara Order Quantity dan Total Sales Amount. Hal ini digunakan untuk melihat hubungan antara Total Sales Amount (Jumlah Total Penjualan) dan Total Order Quantity (Jumlah Total Pesanan). Berdasarkan gambar, terdapat titik pada koordinat (336, 1.2 juta), ini berarti produk tersebut memiliki 336 pesanan dengan total penjualan sebesar kurang lebih 1.2 (1,202,208) juta.
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+
+    st.header("Monthly Sales Amount Distribution")
+    st.write("Distribusi Jumlah Total Penjualan Per Bulan")
+    st.write("Distribution: Histogram Column")
+    
+    # SQLAlchemy connection and query for histogram
+    try:
+        # SQL query to fetch the required data for histogram
+        histogram_query = """
+        SELECT 
+            MONTH(OrderDateKey) AS Month,
+            SUM(SalesAmount) AS TotalSalesAmount
+        FROM 
+            factinternetsales
+        GROUP BY 
+            MONTH(OrderDateKey)
+        """
+        
+        # Fetch the data into a pandas DataFrame
+        df_histogram = pd.read_sql(histogram_query, engine)
+        
+        # Plotting the column histogram using matplotlib
+        plt.figure(figsize=(10, 6))
+        plt.bar(df_histogram['Month'], df_histogram['TotalSalesAmount'], color='skyblue')
+        plt.title('Monthly Sales Amount Distribution')
+        plt.xlabel('Month')
+        plt.ylabel('Total Sales Amount')
+        plt.xticks(range(1, 13))  # Set x-axis ticks from 1 to 12 (months)
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        
+        # Display the plot in Streamlit
+        st.pyplot(plt)
+        
+    except Exception as e:
+        st.error(f"Error: {e}")
+
+    st.markdown("""
+    <div style='text-align: justify;'>
+    <b>Deskripsi Data Visualisasi:</b><br>
+    Data Visualisasi tersebut menggunakan Histogram Column Chart untuk menampilkan distribusi jumlah penjualan tiap bulan. Komponen grafik ini terdiri dari label sumbu x yaitu Month (Bulan) dan label sumbu y yaitu Total Sales Amount (Jumlah penjualan). Berdasarkan hasil tersebut, diketahui bahwa jumlah penjualan perbulan tertinggi terletak pada bulan ke-10 (Oktober) sekitar 1,640,296.00 dan jumlah penjualan terendah terletak pada bulan ke-11 (November) sekitar 45,642.00.
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
         
     elif dataset_choice == "IMDB Movies":
         st.markdown("<h2 style='text-align: center;'>Dataset IMDB Movies🎬</h2>", unsafe_allow_html=True)
