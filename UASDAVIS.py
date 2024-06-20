@@ -321,6 +321,43 @@ def main():
         
             st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
 
+            st.header("Total Movies by Release Year")
+            st.write("Jumlah Film berdasarkan Tahun Rilis")
+            st.write("Comparison: Bar Chart")
+        
+            # Plot the total movies by release year
+        try:
+            # Count total movies by release year
+            movies_per_year = data['Year'].value_counts().sort_index()
+    
+            # Create a list of random colors for each bar
+            colors = ['#%06X' % random.randint(0, 0xFFFFFF) for i in range(len(movies_per_year))]
+    
+            # Plotting the bar chart
+            plt.figure(figsize=(10, 6))
+            movies_per_year.plot(kind='bar', color=colors)  # Set bar colors to be colorful
+            plt.title('Total Movies by Release Year')
+            plt.xlabel('Release Year')
+            plt.ylabel('Total Movies')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.show()
+    
+            # Display the plot in Streamlit
+            st.pyplot(plt)
+            
+        except Exception as e:
+            st.error(f"Error: {e}")
+    
+        st.markdown("""
+        <div style='text-align: justify;'>
+        <b>Deskripsi Data Visualisasi:</b><br>
+        Data Visualisasi tersebut menggunakan Bar Chart untuk mengetahui Jumlah Film Berdasarkan Tahun Rilis. Setiap batang mewakili tahun rilis film, dengan tinggi batang menunjukkan jumlah film yang dirilis pada tahun tersebut. Berdasarkan gambar, tahun 1994 merilis film paling banyak sejumlah 5 film. Pada tahun 1999 dan 2000 merilis film terbanyak kedua sejumlah 3 film. Untuk tahun lainnya, merilis film dengan jumlah yang sama sekitar 1 film.
+        </div>
+        """, unsafe_allow_html=True)
+    
+        st.markdown("<hr>", unsafe_allow_html=True)  # Garis horizontal
+
 # Entry point untuk aplikasi Streamlit
 if __name__ == "__main__":
     main()
