@@ -59,7 +59,11 @@ def load_data_imdb(file_path):
 def main():
     
     # Sidebar untuk memilih dataset
+    st.markdown("<h2 style='text-align: center;'>WELCOME TO MY DASHBOARD📝</h2>", unsafe_allow_html=True)
+    <b>by Ardilla Firosya:</b> <br>
+        
     dataset_choice = st.sidebar.radio("Pilih Dataset", ("Adventure Works", "IMDb top Movies"))
+    
 
     if dataset_choice == "Adventure Works":
         st.markdown("<h1 style='text-align: center;'>Dashboard Adventure Works📝</h1>", unsafe_allow_html=True)
