@@ -394,7 +394,7 @@ def main():
         st.markdown("""
         <div style='text-align: justify;'>
         <b>Deksripsi Data Visualisasi:</b><br>
-        Data visualisasi tersebut menggunakan Donut Chart untuk menampilkan distribusi film berdasarkan rating. Gambar tersebut menunjukkan distribusi rating film, sedangkan label dan persentase yang diberikan menunjukkan proporsi masing-masing rating. Terdapat 6 kategori rating di mana kategori rating R mendapatkan nilai proporsi tertinggi sebesar 52%, sedangkan nilai terendah sebesar 2% terdapat pada kategori rating Approved.
+        Data visualisasi tersebut menggunakan Donut Chart untuk menampilkan distribusi film berdasarkan rating. Gambar tersebut menunjukkan distribusi rating film, sedangkan label dan persentase yang diberikan menunjukkan proporsi masing-masing rating. Terdapat 6 kategori rating yaitu kategori rating R mendapatkan nilai proporsi tertinggi sebesar 52%, Rating PG-13 mendapatkan nilai proporsi sebesar 20%, Rating PG mendapatkan nilai proporsi sebesar 16%, Rating Not Rate mendapatkan nilai proporsi sebesar 6%, Rating G mendapatkan nilai proporsi sebesar 2%. sedangkan nilai terendah sebesar 2% terdapat pada kategori rating Approved.
         </div>
         """, unsafe_allow_html=True)
     
