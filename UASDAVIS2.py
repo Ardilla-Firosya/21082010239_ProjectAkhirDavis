@@ -74,7 +74,8 @@ def main():
         try:
             dialect = st.secrets["connections"]["mydb"]["dialect"], 
             driver = st.secrets["connections"]["mydb"]["driver"], 
-            host=st.secrets["connections"]["mydb"]["host"], port=st.secrets["connections"]["mydb"]["port"],
+            host=st.secrets["connections"]["mydb"]["host"], 
+            port=st.secrets["connections"]["mydb"]["port"],
             user=st.secrets["connections"]["mydb"]["user"],
             password=st.secrets["connections"]["mydb"]["password"],
             database=st.secrets["connections"]["mydb"]["database"]
